@@ -1,15 +1,12 @@
 package main
 
 import (
-	"database/sql"
 	"log"
 	"net/http"
 
 	"kendir-mini/controller"
 	"kendir-mini/db"
 )
-
-var DB *sql.DB
 
 func main() {
 	// Connect database

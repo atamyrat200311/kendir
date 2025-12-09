@@ -5,12 +5,8 @@ import (
 	"net/http"
 
 	"kendir-mini/db"
+	"kendir-mini/dto"
 )
-
-type User struct {
-	Id   int    `json:"id"`
-	Name string `json:"name"`
-}
 
 func UserCreate(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
@@ -18,7 +14,7 @@ func UserCreate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var input User
+	var input dto.User
 	if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
 		http.Error(w, "Invalid body", http.StatusBadRequest)
 		return
@@ -46,9 +42,9 @@ func UserGet(w http.ResponseWriter, r *http.Request) {
 	}
 	defer rows.Close()
 
-	var users []User
+	var users []dto.User
 	for rows.Next() {
-		var u User
+		var u dto.User
 		if err := rows.Scan(&u.Id, &u.Name); err != nil {
 			http.Error(w, "Scan error", http.StatusInternalServerError)
 			return
