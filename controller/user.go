@@ -20,6 +20,11 @@ func UserCreate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if len(input.Name) < 5 {
+		http.Error(w, "Name must be 5 letters at least", http.StatusBadRequest)
+		return
+	}
+
 	err := db.DB.QueryRow(
 		"INSERT INTO users(name) VALUES($1) RETURNING id",
 		input.Name,
